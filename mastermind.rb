@@ -84,7 +84,7 @@ class GameTime < PlayerInput
       game_loop
     end
   end
+end
 
 game_one = GameTime.new
 game_one.intro
-end
