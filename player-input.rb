@@ -25,4 +25,8 @@ class PlayerInput
   def play?(input)
     input == "p"
   end
+
+  def huh?(input)
+    input != "q"; input != "p"; input != "i"
+  end
 end
