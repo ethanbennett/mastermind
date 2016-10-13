@@ -1,16 +1,16 @@
 require_relative 'player-input'
 
 class GameTime < PlayerInput
-  attr_reader   :secret_answer
-  attr_accessor :count
-                :timer_start
-                :second_count
+  attr_reader          :secret_answer
+  attr_accessor        :count
+                       :timer_start
+                       :second_count
   
   def initialize
-    @secret_answer = ["r", "g", "y", "b"].shuffle.join
-    @count         = 0
-    @timer_start   = Time.now
-    @second_count  = 0
+    @secret_answer     = ["r", "g", "y", "b"].shuffle.join
+    @count             = 0
+    @timer_start       = Time.now
+    @second_count      = 0
   end
 
   def intro
