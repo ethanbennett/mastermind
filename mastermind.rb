@@ -56,13 +56,14 @@ class GameTime < PlayerInput
   def nice_try(input)
     @count += 1
     hints(0, input)
-    puts "\nNot quite. Try again. You got #{@second_count} colors right.\n\n"
+    puts "\nNot quite. Try again. You got #{@second_count} color(s) right.\n\n"
     game_loop
   end
 
   def hints(n, input)
     return @second_count  if n > 3
     @second_count += 1    if input[n].eql? secret_answer[n]
+    @second_count         if input[n] != secret_answer[n]
     hints(n+1, input)
   end
 
@@ -77,10 +78,15 @@ class GameTime < PlayerInput
   end
 
   def end_game_set_up
+    puts "\n\n\n\n--------------------------------------------\n\n╔═╗  ╔═╗  ╔╗╔  ╔═╗  ╦═╗  ╔═╗  ╔╦╗  ╔═╗  ┬
+║    ║ ║  ║║║  ║ ╦  ╠╦╝  ╠═╣   ║   ╚═╗  │
+╚═╝  ╚═╝  ╝╚╝  ╚═╝  ╩╚═  ╩ ╩   ╩   ╚═╝  o
+
+--------------------------------------------"
     @count += 1
     @timer_end = Time.now
     time = @timer_start - @timer_end
-    @minutes = time.to_i/60; minutes = 0 if @minutes < 1
+    @minutes = time.to_i/60; @minutes = 0 if @minutes < 1
     @seconds = 60 - time.to_i%60
   end
 
