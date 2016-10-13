@@ -1,3 +1,4 @@
+require 'audite'
 require_relative 'player-input'
 
 class GameTime < PlayerInput
@@ -5,13 +6,19 @@ class GameTime < PlayerInput
   attr_reader           :secret_answer
   attr_accessor         :count
                         :timer_start
+                        :timer_end
+                        :minutes
+                        :seconds
                         :second_count
   
   def initialize
     @secret_answer     = ["r", "g", "y", "b"].shuffle.join
     @count             = 0
     @timer_start       = Time.now
+    @timer_end         = 0
     @second_count      = 0
+    @minutes           = 0
+    @seconds           = 0
   end
 
   def intro
@@ -60,16 +67,27 @@ class GameTime < PlayerInput
   end
 
   def end_game
-    @count += 1
-    timer_end = Time.now
-    time = @timer_start - timer_end
-    minutes = time.to_i/60; minutes = 0 if minutes < 1
-    seconds = 60 - time.to_i%60
-    puts "\nWhoa, you actually did it? What a waste of time! It took you #{count} tries in #{minutes} minutes and #{seconds} seconds.
+    music
+    end_game_set_up
+    puts "\nWhoa, you actually did it? What a waste of time! It took you #{@count} tries in #{@minutes} minutes and #{@seconds} seconds.
     Would you like to (p)lay again or (q)uit?\n\n"
     input = gets.chomp
     quitter if q?(input)
     restart if play?(input)
+  end
+
+  def end_game_set_up
+    @count += 1
+    @timer_end = Time.now
+    time = @timer_start - @timer_end
+    @minutes = time.to_i/60; minutes = 0 if @minutes < 1
+    @seconds = 60 - time.to_i%60
+  end
+
+  def music
+    music = Audite.new
+    music.load('music.mp3')
+    music.start_stream
   end
   
   def restart
