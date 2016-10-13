@@ -1,3 +1,4 @@
+require 'pry'
 require 'audite'
 require_relative 'player-input'
 
