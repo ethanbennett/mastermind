@@ -57,13 +57,13 @@ class GameTime < PlayerInput
     @count += 1
     hints(0, input)
     puts "\nNot quite. Try again. You got #{@second_count} color(s) right.\n\n"
+    @second_count = 0
     game_loop
   end
 
   def hints(n, input)
     return @second_count  if n > 3
     @second_count += 1    if input[n].eql? secret_answer[n]
-    @second_count         if input[n] != secret_answer[n]
     hints(n+1, input)
   end
 
