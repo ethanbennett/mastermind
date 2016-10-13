@@ -1,4 +1,4 @@
-require './lib/player-input'
+require_relative 'player-input'
 
 class GameTime < PlayerInput
   attr_reader   :secret_answer
