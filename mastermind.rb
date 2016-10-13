@@ -15,7 +15,7 @@ class GameTime < PlayerInput
   end
 
   def intro
-    puts 'Welcome to MASTERMIND. Would you like to (p)lay, read the (i)nstructions, or (q)uit?'
+    puts "\nWelcome to MASTERMIND. Would you like to (p)lay, read the (i)nstructions, or (q)uit?\n\n"
     input = gets.chomp.downcase
     start              if play?(input)
     instructing_stuff  if instructions?(input)
@@ -23,22 +23,25 @@ class GameTime < PlayerInput
   end
 
   def game_loop
-    input = gets.chomp.downcase
+    input               = gets.chomp.downcase
     cheater            if c?(input)
     quitter            if q?(input)
     end_game           if correct?(input)
     too_long           if input.length > 4
-    too_short          if input.length < 4 && input != "q"
-    nice_try(input)    if wrong?(input) && input != "q"
+    too_short          if input.length < 4
+    nice_try(input)    if wrong?(input)
   end
 
   def instructing_stuff
-    puts "I'll generate a beginner sequence with four elements made up of: (r)ed, (g)reen, (b)lue, and (y)ellow. \nGuess the four elements in the correct order to win. \nUse (q)uit at any time to end the game."
+    puts "\nI'll generate a beginner sequence with four elements made up of: (r)ed, (g)reen, (b)lue, and (y)ellow. 
+    Guess the four elements in the correct order to win. 
+    Use (q)uit at any time to end the game.\n\n"
     intro
   end
 
   def start
-    puts "I have generated a beginner sequence with four elements made up of: (r)ed, (g)reen, (b)lue, and (y)ellow. \nUse (q)uit at any time to end the game. What's your guess?"
+    puts "\nI have generated a beginner sequence with four elements made up of: (r)ed, (g)reen, (b)lue, and (y)ellow. 
+    Use (q)uit at any time to end the game. What's your guess?\n\n"
     @timer_start = Time.now
     game_loop
   end
@@ -46,7 +49,7 @@ class GameTime < PlayerInput
   def nice_try(input)
     @count += 1
     hints(0, input)
-    puts "Not quite. Try again. You got #{@second_count} colors right."
+    puts "\nNot quite. Try again. You got #{@second_count} colors right.\n\n"
     game_loop
   end
 
@@ -62,14 +65,17 @@ class GameTime < PlayerInput
     time = @timer_start - timer_end
     minutes = time.to_i/60; minutes = 0 if minutes < 1
     seconds = 60 - time.to_i%60
-    puts "Whoa, you actually did it? What a waste of time! It took you #{count} tries in #{minutes} minutes and #{seconds} seconds.\nWould you like to (p)lay again or (q)uit?"
+    puts "\nWhoa, you actually did it? What a waste of time! It took you #{count} tries in #{minutes} minutes and #{seconds} seconds.
+    Would you like to (p)lay again or (q)uit?\n\n"
     input = gets.chomp
     quitter if q?(input)
     restart if play?(input)
   end
   
   def restart
-    puts "Good luck...I have generated a beginner sequence with four elements made up of: (r)ed, (g)reen, (b)lue, and (y)ellow. \nUse (q)uit at any time to end the game. What's your guess?"
+    puts "\nGood luck...I have generated a beginner sequence with four elements made up of: 
+    (r)ed, (g)reen, (b)lue, and (y)ellow. 
+    Use (q)uit at any time to end the game. What's your guess?\n\n"
     @timer_start    = Time.now
     @count          = 0
     @secret_answer  = ["r", "g", "y", "b"].shuffle.join
@@ -78,25 +84,25 @@ class GameTime < PlayerInput
 
   def cheater
     @count += 1
-    puts "#{secret_answer}...so what's your guess?"
+    puts "\n#{secret_answer}...so what's your guess?\n\n"
     game_loop
   end
 
   def too_short
     @count += 1
-    puts "That's too few characters!"
+    puts "\nThat's too few characters!\n\n"
     game_loop
   end
 
   def too_long
     @count += 1
-    puts "That's too many characters!"
+    puts "\nThat's too many characters!\n\n"
     game_loop
   end
 
   def quitter
-    puts "OK, later dude."
-    return
+    puts "\nOK, later dude.\n\n"
+    exit
   end
 
 end
